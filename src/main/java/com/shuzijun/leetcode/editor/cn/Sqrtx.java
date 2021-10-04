@@ -36,6 +36,7 @@ package com.shuzijun.leetcode.editor.cn;
 public class Sqrtx {
     public static void main(String[] args) {
         Solution solution = new Sqrtx().new Solution();
+        solution.mySqrt(4);
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
@@ -43,7 +44,9 @@ public class Sqrtx {
         public int mySqrt(int x) {
             int left = 0, right = x, ans = -1;
             while (left <= right) {
+                //int mid = (right + left) / 2;这两种方式均可好像
                 int mid = left + (right - left) / 2;
+                System.out.println("left:" + left + ",right:" + right + ",mid:" + mid);
                 if ((long) mid * mid <= x) {
                     left = mid + 1;
                     ans = mid;
