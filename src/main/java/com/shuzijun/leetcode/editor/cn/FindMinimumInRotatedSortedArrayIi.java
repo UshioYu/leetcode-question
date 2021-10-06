@@ -59,7 +59,7 @@ public class FindMinimumInRotatedSortedArrayIi {
     class Solution {
         public int findMin(int[] nums) {
             int left = 0, right = nums.length - 1;
-            while (left <= right) {
+            while (left < right) {
                 int mid = (left + right) / 2;
                 if (nums[mid] < nums[right]) {
                     //表示最小值在left，mid之间(可能包含mid)
