@@ -54,7 +54,41 @@ public class SortCharactersByFrequency {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+
         public String frequencySort(String s) {
+            //先把字符和具体出现次数存入map，同时记录最高频率maxFreq
+            int maxFreq = 0;
+            HashMap<Character, Integer> map = new HashMap<>();
+            for (int i = 0; i < s.length(); i++) {
+                char c = s.charAt(i);
+                int freq = map.getOrDefault(c, 0) + 1;
+                map.put(c, freq);
+                maxFreq = Math.max(maxFreq, freq);
+            }
+            //创建桶，存储从1到maxFreq每个出现频率的字符
+            StringBuffer[] buckets = new StringBuffer[maxFreq + 1];
+            for (int i = 0; i <= maxFreq; i++) {
+                buckets[i] = new StringBuffer();
+            }
+            for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+                char c = entry.getKey();
+                int freq = entry.getValue();
+                buckets[freq].append(c);
+            }
+            //拼接,从桶里取数据
+            StringBuffer sb = new StringBuffer();
+            for (int i = maxFreq; i > 0; i--) {
+                StringBuffer bucket = buckets[i];
+                for (int j = 0; j < bucket.length(); j++) {
+                    for (int k = 0; k < i; k++) {
+                        sb.append(bucket.charAt(j));
+                    }
+                }
+            }
+            return sb.toString();
+        }
+
+        public String frequencySort1(String s) {
             //先把字符和具体出现次数存入map
             HashMap<Character, Integer> map = new HashMap<>();
             for (int i = 0; i < s.length(); i++) {
@@ -63,7 +97,7 @@ public class SortCharactersByFrequency {
             }
             //map转list然后进行sort排序
             List<Character> list = new ArrayList<>(map.keySet());
-            Collections.sort(list, (o1, o2) -> map.get(o2)-map.get(o1));
+            Collections.sort(list, (o1, o2) -> map.get(o2) - map.get(o1));
             //字符串拼接
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < list.size(); i++) {
