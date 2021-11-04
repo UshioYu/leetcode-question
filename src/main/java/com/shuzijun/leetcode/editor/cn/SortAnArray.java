@@ -36,42 +36,45 @@ public class SortAnArray {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+
+        int[] tmp;
+
         public int[] sortArray(int[] array) {
+            tmp = new int[array.length];
             if (array == null || array.length <= 1) {
                 return array;
             }
-            sort(array, 0, array.length - 1);
+            mergeSort(array, 0, array.length - 1);
             return array;
         }
 
-        public void sort(int[] array, int left, int right) {
-            if (array == null || left >= right || array.length < 1) {
+        public void mergeSort(int[] array, int left, int right) {
+            if (left >= right) {
                 return;
             }
-            int middle = partition(array, left, right);
-            sort(array, left, middle);
-            sort(array, middle + 1, right);
-        }
-
-        public int partition(int[] array, int left, int right) {
-            int temp = array[left];
-            while (left < right) {
-                while (left < right && temp <= array[right]) {
-                    right--;
-                }
-                if (left < right) {
-                    array[left++] = array[right];
-                }
-                while (left < right && temp >= array[left]) {
-                    left++;
-                }
-                if (left < right) {
-                    array[right--] = array[left];
+            int middle = (left + right) >> 1;
+            mergeSort(array, left, middle);
+            mergeSort(array, middle + 1, right);
+            int i = left, j = middle + 1;
+            int cnt = 0;
+            while (i <= middle && j <= right) {
+                if (array[i] <= array[j]) {
+                    tmp[cnt++] = array[i++];
+                } else {
+                    tmp[cnt++] = array[j++];
                 }
             }
-            array[left] = temp;
-            return left;
+            while (i <= middle) {
+                tmp[cnt++] = array[i++];
+            }
+            while (j <= right) {
+                tmp[cnt++] = array[j++];
+            }
+            for (int k = 0; k < right - left + 1; k++) {
+                array[left + k] = tmp[k];
+            }
         }
+
 
     }
     //leetcode submit region end(Prohibit modification and deletion)
