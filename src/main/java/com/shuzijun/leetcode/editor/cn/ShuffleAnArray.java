@@ -45,7 +45,7 @@ import java.util.Random;
 
 public class ShuffleAnArray {
     public static void main(String[] args) {
-        Solution solution = new ShuffleAnArray().new Solution();
+//        Solution solution = new ShuffleAnArray().new Solution();
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
